@@ -1,7 +1,368 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b2a5b"><title>CubaHoy</title>
-<style>*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#f4f6f8;color:#17202a}header{background:linear-gradient(135deg,#0b2a5b,#123f82);color:white;padding:18px 16px}.brand{font-size:30px;font-weight:900}.brand span{color:#e31d2f}.tag{font-size:13px;opacity:.85}main{max-width:900px;margin:auto;padding:16px}.card{background:white;border-radius:15px;margin-bottom:15px;overflow:hidden;box-shadow:0 2px 10px #0001}.card img{width:100%;max-height:300px;object-fit:cover}.pad{padding:16px}.breaking{color:#e31d2f;font-weight:800;font-size:12px;text-transform:uppercase}h1{font-size:27px;margin:8px 0}.meta{color:#667085;font-size:13px}.content{line-height:1.6;white-space:pre-wrap}.empty{text-align:center;padding:30px;color:#667085}</style></head>
-<body><header><div class="brand">Cuba<span>Hoy</span></div><div class="tag">Noticias de Cuba y el mundo</div></header><main id="app"><div class="empty">Cargando noticias…</div></main>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b5ed7">
+
+  <title>CubaHoy - Noticias de Cuba</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f7;
+      color: #222;
+    }
+
+    header {
+      background: #075bbb;
+      color: white;
+      padding: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.2);
+    }
+
+    .top {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #ffd400;
+    }
+
+    .menu-btn {
+      background: white;
+      color: #075bbb;
+      border: none;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    nav {
+      display: none;
+      max-width: 1100px;
+      margin: 15px auto 0;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    nav.show {
+      display: flex;
+    }
+
+    nav button {
+      border: none;
+      background: white;
+      color: #075bbb;
+      padding: 10px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #075bbb, #063b78);
+      color: white;
+      border-radius: 14px;
+    }
+
+    .hero h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 0 15px 40px;
+    }
+
+    .section-title {
+      margin: 25px 0 15px;
+      font-size: 25px;
+      border-left: 5px solid #075bbb;
+      padding-left: 10px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    }
+
+    .card-image {
+      height: 170px;
+      background: linear-gradient(135deg, #0b5ed7, #8ec5ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 45px;
+    }
+
+    .card-content {
+      padding: 17px;
+    }
+
+    .category {
+      color: #075bbb;
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 9px;
+      line-height: 1.25;
+    }
+
+    .card p {
+      color: #666;
+      line-height: 1.45;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .buttons button {
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    footer {
+      background: #063b78;
+      color: white;
+      text-align: center;
+      padding: 25px 15px;
+      margin-top: 30px;
+    }
+
+    .search {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .search input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .logo {
+        font-size: 24px;
+      }
+
+      .hero h1 {
+        font-size: 27px;
+      }
+
+      .buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="top">
+    <div class="logo">Cuba<span>Hoy</span></div>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  </div>
+
+  <nav id="menu">
+    <button onclick="showSection('Últimas noticias')">🔴 Últimas</button>
+    <button onclick="showSection('Cuba')">🇨🇺 Cuba</button>
+    <button onclick="showSection('Internacional')">🌎 Internacional</button>
+    <button onclick="showSection('Deportes')">⚽ Deportes</button>
+    <button onclick="showSection('Videos')">📹 Videos</button>
+    <button onclick="showSection('Fotos')">📸 Fotos</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>CubaHoy</h1>
+  <p>
+    Noticias de Cuba y el mundo. Información, actualidad,
+    análisis, deportes, videos y contenido multimedia.
+  </p>
+</section>
+
+<div class="search">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="🔎 Buscar noticias..."
+    onkeyup="searchNews()"
+  >
+</div>
+
+<main class="container">
+
+  <h2 class="section-title" id="sectionTitle">
+    Últimas noticias
+  </h2>
+
+  <div class="news-grid" id="newsGrid">
+
+    <article class="card">
+      <div class="card-image">🇨🇺</div>
+      <div class="card-content">
+        <div class="category">Cuba</div>
+        <h3>Las noticias más importantes de Cuba</h3>
+        <p>
+          Información y actualidad nacional en CubaHoy.
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image">🌎</div>
+      <div class="card-content">
+        <div class="category">Internacional</div>
+        <h3>Las principales noticias del mundo</h3>
+        <p>
+          Actualidad internacional y acontecimientos destacados.
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image">⚽</div>
+      <div class="card-content">
+        <div class="category">Deportes</div>
+        <h3>Todo el deporte en CubaHoy</h3>
+        <p>
+          Resultados, protagonistas y noticias deportivas.
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image">📹</div>
+      <div class="card-content">
+        <div class="category">Videos</div>
+        <h3>Videos de CubaHoy</h3>
+        <p>
+          Reportajes, noticias y contenido audiovisual.
+        </p>
+      </div>
+    </article>
+
+  </div>
+
+  <h2 class="section-title">CubaHoy Multimedia</h2>
+
+  <div class="buttons">
+    <button onclick="alert('Sección de noticias')">
+      📰 Noticias
+    </button>
+
+    <button onclick="alert('Sección de videos')">
+      📹 Videos
+    </button>
+
+    <button onclick="alert('Sección de fotos')">
+      📸 Fotos
+    </button>
+
+    <button onclick="alert('Las notificaciones estarán disponibles próximamente')">
+      🔔 Notificaciones
+    </button>
+  </div>
+
+</main>
+
+<footer>
+  <strong>CubaHoy</strong>
+  <p>Noticias de Cuba y el mundo</p>
+  <p>© 2026 CubaHoy</p>
+</footer>
+
 <script>
-const esc=s=>String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
-async function load(){try{let ns=await (await fetch("/api/news")).json();document.getElementById("app").innerHTML=ns.length?ns.map(n=>`<article class="card">${n.image?`<img src="${esc(n.image)}">`:""}<div class="pad">${n.breaking?'<div class="breaking">Última hora</div>':""}<h1>${esc(n.title)}</h1><div class="meta">${esc(n.category)} · ${new Date(n.created_at+"Z").toLocaleString("es-ES")}</div><p class="content">${esc(n.content)}</p></div></article>`).join(""):'<div class="empty">No hay noticias.</div>'}catch(e){document.getElementById("app").innerHTML='<div class="empty">No se pudo conectar.</div>'}}load();
-</script></main></body></html>
+  function toggleMenu() {
+    document.getElementById("menu").classList.toggle("show");
+  }
+
+  function showSection(section) {
+    document.getElementById("sectionTitle").textContent = section;
+    document.getElementById("menu").classList.remove("show");
+    window.scrollTo({
+      top: 250,
+      behavior: "smooth"
+    });
+  }
+
+  function searchNews() {
+    const input = document
+      .getElementById("searchInput")
+      .value
+      .toLowerCase();
+
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+
+      if (text.includes(input)) {
+        card.style.display = "";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
